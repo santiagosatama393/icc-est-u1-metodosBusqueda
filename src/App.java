@@ -33,74 +33,116 @@ public class App {
 
 
 
-
-
-
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        Scanner leer = new Scanner(System.in);
+
+        int n;
 
         System.out.print("Ingrese cantidad de personas: ");
-        int n = sc.nextInt();
-        sc.nextLine();
+        n = leer.nextInt();
+        leer.nextLine();
 
-        Persona[] personas = new Persona[n];
-            
-        for (int i = 0; i < personas.length; i++) {
+        String[] nombres = new String[n];
+        int[] edades = new int[n];
 
-            System.out.println("\nIngrese Persona:");
+        // INGRESAR DATOS
+        for (int i = 0; i < n; i++) {
 
-            System.out.print("Nombre: ");
-            String nombre = sc.nextLine();
+            System.out.println("\nPersona " + (i + 1));
 
-            int edad;
+            System.out.print("Ingrese nombre: ");
+            nombres[i] = leer.nextLine();
 
-            do {
+            System.out.print("Ingrese edad: ");
+            edades[i] = leer.nextInt();
+            leer.nextLine();
+        }
 
-                System.out.print("Edad: ");
-                edad = sc.nextInt();
+        // ORDENAMIENTO BURBUJA
+        for (int i = 0; i < edades.length - 1; i++) {
 
-                if (edad < 0) {
-                    System.out.println("La edad no puede ser negativa");
+            for (int j = 0; j < edades.length - 1; j++) {
+
+                if (edades[j] > edades[j + 1]) {
+
+                    int auxEdad = edades[j];
+                    edades[j] = edades[j + 1];
+                    edades[j + 1] = auxEdad;
+
+                    String auxNombre = nombres[j];
+                    nombres[j] = nombres[j + 1];
+                    nombres[j + 1] = auxNombre;
                 }
-
-            } while (edad < 0);
-
-            sc.nextLine();
-
-            personas[i] = new Persona(nombre, edad);
+            }
         }
 
-        BusquedaBinaria bb = new BusquedaBinaria();
+        // MOSTRAR LISTA ORDENADA
+        System.out.println("\nLista ordenada:");
 
-        bb.ordenar(personas);
-        System.out.println("\nEdades ordenadas:");
-
-        for (int i = 0; i < personas.length; i++) {
-
-            System.out.print(personas[i].getEdad() + " | ");
+        for (int i = 0; i < edades.length; i++) {
+            System.out.println(nombres[i] + " - " + edades[i]);
         }
 
-        // buscar edad
-        System.out.print("\n\nIngrese edad a buscar: ");
-        int buscar = sc.nextInt();
+        // BUSQUEDA
+        System.out.print("\nIngrese la edad a buscar: ");
+        int buscar = leer.nextInt();
 
-        int res = bb.buscar(personas, buscar);
+        int bajo = 0;
+        int alto = edades.length - 1;
 
-        if (res >= 0) {
+        while (bajo <= alto) {
 
-            System.out.println(
-                "\nLa persona con la edad " +
-                buscar +
-                " es " +
-                personas[res].getNombre()
-            );
+            int centro = (bajo + alto) / 2;
 
-        } else {
+            // IMPRIMIR COMO LA IMAGEN
+            for (int i = bajo; i <= alto; i++) {
 
-            System.out.println("\nNo se encontro la edad");
+                System.out.print(edades[i]);
+
+                if (i < alto) {
+                    System.out.print(" | ");
+                }
+            }
+
+            System.out.println();
+
+            System.out.print("bajo=" + bajo + "    ");
+            System.out.print("alto=" + alto + "    ");
+            System.out.print("centro=" + centro + "    ");
+            System.out.print("valorCentro=" + edades[centro] + "    ");
+
+            if (buscar > edades[centro]) {
+
+                System.out.println("--> DERECHA");
+                System.out.println();
+
+                bajo = centro + 1;
+
+            } else if (buscar < edades[centro]) {
+
+                System.out.println("--> IZQUIERDA");
+                System.out.println();
+
+                alto = centro - 1;
+
+            } else {
+
+                System.out.println("--> ENCONTRADO");
+                System.out.println();
+
+                System.out.println("La persona con la edad "
+                        + buscar + " es "
+                        + nombres[centro]);
+
+                break;
+            }
         }
 
-        sc.close();
+        leer.close();
     }
 }
+
+
+
+
