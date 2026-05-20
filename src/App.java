@@ -46,7 +46,6 @@ public class App {
         String[] nombres = new String[n];
         int[] edades = new int[n];
 
-        // INGRESAR DATOS
         for (int i = 0; i < n; i++) {
 
             System.out.println("\nPersona " + (i + 1));
@@ -59,7 +58,6 @@ public class App {
             leer.nextLine();
         }
 
-        // ORDENAMIENTO BURBUJA
         for (int i = 0; i < edades.length - 1; i++) {
 
             for (int j = 0; j < edades.length - 1; j++) {
@@ -77,14 +75,13 @@ public class App {
             }
         }
 
-        // MOSTRAR LISTA ORDENADA
+
         System.out.println("\nLista ordenada:");
 
         for (int i = 0; i < edades.length; i++) {
             System.out.println(nombres[i] + " - " + edades[i]);
         }
 
-        // BUSQUEDA
         System.out.print("\nIngrese la edad a buscar: ");
         int buscar = leer.nextInt();
 
@@ -95,7 +92,7 @@ public class App {
 
             int centro = (bajo + alto) / 2;
 
-            // IMPRIMIR COMO LA IMAGEN
+            
             for (int i = bajo; i <= alto; i++) {
 
                 System.out.print(edades[i]);
@@ -142,7 +139,3 @@ public class App {
         leer.close();
     }
 }
-
-
-
-
